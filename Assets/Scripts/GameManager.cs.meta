@@ -3,7 +3,9 @@ guid: 6e00f0817a74494479a0d524b730132f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - droneController: {instanceID: 0}
+  - froogy_Scored: {fileID: 1475337010539117233, guid: 0b97212ecc595e449901d1ea91b2451c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

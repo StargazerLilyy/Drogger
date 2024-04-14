@@ -8,6 +8,10 @@ public class DroneController : MonoBehaviour
     public float moveSpeed = 3f;
     public Transform movePoint;
 
+    public Animator animator;
+
+    public GameManager gameManager;
+
     public bool[] goals;
     public int goalsScored;
     // Start is called before the first frame update
@@ -22,11 +26,11 @@ public class DroneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("MovementSpeed", Vector3.Distance(transform.position, movePoint.position));
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
-
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
             {
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
@@ -51,7 +55,7 @@ public class DroneController : MonoBehaviour
             {
                 goals[0] = true;
                 goalsScored++;
-                PlayerScored();
+                PlayerScored(0);
             }
         }
         if (IsBetween(transform.position.x, -6, -4))
@@ -60,7 +64,7 @@ public class DroneController : MonoBehaviour
             {
                 goals[1] = true;
                 goalsScored++;
-                PlayerScored();
+                PlayerScored(1);
             }
         }
         if (IsBetween(transform.position.x, -1, 1))
@@ -69,7 +73,7 @@ public class DroneController : MonoBehaviour
             {
                 goals[2] = true;
                 goalsScored++;
-                PlayerScored();
+                PlayerScored(2);
             }
         }
         if (IsBetween(transform.position.x, 4, 6))
@@ -78,7 +82,7 @@ public class DroneController : MonoBehaviour
             {
                 goals[3] = true;
                 goalsScored++;
-                PlayerScored();
+                PlayerScored(3);
             }
         }
         if (IsBetween(transform.position.x, 9, 11))
@@ -87,7 +91,7 @@ public class DroneController : MonoBehaviour
             {
                 goals[4] = true;
                 goalsScored++;
-                PlayerScored();
+                PlayerScored(4);
             }
         }
     }
@@ -101,8 +105,10 @@ public class DroneController : MonoBehaviour
         return false;
     }
 
-    private void PlayerScored()
+    private void PlayerScored(int lillyPadNum)
     {
+        gameManager.GoalScored(lillyPadNum);
+
         if (goalsScored == 5)
         {
             //TODO:Trigger Level Complete!
